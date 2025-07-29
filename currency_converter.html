@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Currency Converter (Foreign Exchange Converter)</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #c5dafa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .converter-box {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #007bff;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: 600;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .result {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #28a745;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="converter-box">
+    <h2>Currency Converter<br><small>(Foreign Exchange Converter)</small></h2>
+
+    <label for="amount">Amount</label>
+    <input type="number" id="amount" placeholder="Enter amount" />
+
+    <label for="from-currency">From Currency</label>
+    <select id="from-currency">
+      <option value="INR">INR – Indian Rupee</option>
+      <option value="USD">USD – US Dollar</option>
+      <option value="EUR">EUR – Euro</option>
+      <option value="GBP">GBP – British Pound</option>
+      <option value="JPY">JPY – Japanese Yen</option>
+    </select>
+
+    <label for="to-currency">To Currency</label>
+    <select id="to-currency">
+      <option value="USD">USD – US Dollar</option>
+      <option value="INR">INR – Indian Rupee</option>
+      <option value="EUR">EUR – Euro</option>
+      <option value="GBP">GBP – British Pound</option>
+      <option value="JPY">JPY – Japanese Yen</option>
+    </select>
+
+    <button onclick="convertCurrency()">Convert</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const exchangeRates = {
+      "USD": { "INR": 83.14, "EUR": 0.91, "GBP": 0.78, "JPY": 157.58, "USD": 1 },
+      "INR": { "USD": 0.012, "EUR": 0.011, "GBP": 0.0094, "JPY": 1.9, "INR": 1 },
+      "EUR": { "USD": 1.10, "INR": 91.0, "GBP": 0.86, "JPY": 172.5, "EUR": 1 },
+      "GBP": { "USD": 1.28, "INR": 107.5, "EUR": 1.17, "JPY": 201.6, "GBP": 1 },
+      "JPY": { "USD": 0.0063, "INR": 0.53, "EUR": 0.0058, "GBP": 0.0050, "JPY": 1 }
+    };
+
+    function convertCurrency() {
+      const amount = parseFloat(document.getElementById("amount").value);
+      const from = document.getElementById("from-currency").value;
+      const to = document.getElementById("to-currency").value;
+      const resultDiv = document.getElementById("result");
+
+      if (isNaN(amount) || amount <= 0) {
+        resultDiv.textContent = "Please enter a valid amount.";
+        return;
+      }
+
+      const rate = exchangeRates[from][to];
+      const converted = amount * rate;
+      resultDiv.textContent = `${amount} ${from} = ${converted.toFixed(2)} ${to}`;
+    }
+  </script>
+</body>
+</html>
